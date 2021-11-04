@@ -1,0 +1,26 @@
+version: "2.3"
+services:
+  ethAdapter:
+    image: ethadapter:latest
+    build: .
+    container_name: ethAdapter
+    hostname: ethAdapter
+    ports:
+      - "3000:3000"
+    environment:
+      - RPC_ADDRESS=http://node1-qbn:8545
+      - SMARTCONTRACTADDRESS=%SMARTCONTRACTADDRESS%
+      - 'SMARTCONTRACTABI=%SMARTCONTRACTABI%'
+      - 'ORGACCOUNT=%ORGACCOUNT%'
+    networks:
+      qbn-net:
+        ipv4_address: 172.16.16.16
+
+networks:
+  qbn-net:
+    name: qbn-net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.16.0/24
